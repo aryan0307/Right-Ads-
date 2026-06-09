@@ -44,9 +44,25 @@ const isStandaloneRoute = (pathname) =>
 function AppContent({ darkMode, setDarkMode }) {
   const { pathname } = useLocation();
   const standalone = isStandaloneRoute(pathname);
+  const [scrollDir, setScrollDir] = useState("");
+
+  useEffect(() => {
+    let lastScrollY = window.pageYOffset;
+    const handleScroll = () => {
+      const currentScrollY = window.pageYOffset;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setScrollDir("slide-left");
+      } else if (currentScrollY < lastScrollY) {
+        setScrollDir("slide-right");
+      }
+      lastScrollY = currentScrollY;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className={darkMode ? "dark-theme" : "light-theme"} style={{ minHeight: '100vh', transition: 'background-color 0.4s ease' }}>
+    <div className={`${darkMode ? "dark-theme" : "light-theme"} ${!standalone ? scrollDir : ""}`} style={{ minHeight: '100vh', transition: 'background-color 0.4s ease' }}>
       {!standalone && <Top darkMode={darkMode} setDarkMode={setDarkMode} />}
 
       <main>
@@ -94,18 +110,15 @@ function App() {
 
     const tick = () => {
       currentDrift += (targetDrift - currentDrift) * SCROLL_LERP;
-
       if (Math.abs(targetDrift - currentDrift) < 0.05) {
         currentDrift = targetDrift;
       }
-
       root.style.setProperty('--scroll-drift', `${currentDrift.toFixed(2)}px`);
       rafId = requestAnimationFrame(tick);
     };
 
     const onScroll = () => {
       const scrollY = window.scrollY;
-
       if (scrollY > lastScrollY) {
         targetDrift = MAX_SCROLL_DRIFT;
         root.classList.add('scroll-slide-down');
@@ -115,7 +128,6 @@ function App() {
         root.classList.add('scroll-slide-up');
         root.classList.remove('scroll-slide-down');
       }
-
       lastScrollY = scrollY;
     };
 
