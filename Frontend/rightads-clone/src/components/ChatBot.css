@@ -32,6 +32,13 @@
   flex-direction: column;
   overflow: hidden;
   animation: slideUp 0.3s ease-out;
+
+  background: #0b1120;
+  opacity: 1;
+}
+
+.light .chatbot-container {
+  background: white;
 }
 
 .chatbot-header {
