@@ -31,9 +31,8 @@ async def chat_with_gemini(payload: ChatRequest):
                 timeout=30.0
             )
             
-            if response.status_code != 200:
-                return response.json()
-                
-            return response.json()
+            result = response.json()
+            print(result)
+            return result
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
