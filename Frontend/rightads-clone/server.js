@@ -3,9 +3,18 @@ import cors from 'cors';
 import http from 'http';
 
 const app = express();
-const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:9000';
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+const FASTAPI_URL =
+  process.env.FASTAPI_URL || 'https://right-ads-api.onrender.com';
+
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://right-ads-ten.vercel.app'
+    ]
+  })
+);
 
 const BUSINESS_API_PREFIXES = [
   '/api/contact',
@@ -19,7 +28,12 @@ const BUSINESS_API_PREFIXES = [
 
 function proxyToFastAPI(req, res) {
   const targetUrl = new URL(req.originalUrl, FASTAPI_URL);
-  const headers = { ...req.headers, host: new URL(FASTAPI_URL).host };
+
+  const headers = {
+    ...req.headers,
+    host: new URL(FASTAPI_URL).host,
+  };
+
   delete headers.connection;
 
   const options = {
@@ -37,8 +51,11 @@ function proxyToFastAPI(req, res) {
 
   proxyReq.on('error', (err) => {
     console.error('FastAPI proxy error:', err.message);
+
     if (!res.headersSent) {
-      res.status(502).json({ error: 'Backend service unavailable' });
+      res.status(502).json({
+        error: 'Backend service unavailable',
+      });
     }
   });
 
@@ -52,28 +69,34 @@ BUSINESS_API_PREFIXES.forEach((prefix) => {
 app.use('/api/chat', express.json());
 
 app.post('/api/chat', async (req, res) => {
-  console.log("📩 Frontend se request aayi hai...");
+  console.log('📩 Chat request received');
 
   try {
     const { contents } = req.body;
 
     const API_KEY = process.env.GEMINI_API_KEY;
 
+    if (!API_KEY) {
+      return res.status(500).json({
+        error: 'Gemini API key missing',
+      });
+    }
+
     const endpoint =
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
     const response = await fetch(endpoint, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         contents,
         generationConfig: {
           temperature: 0.2,
-          maxOutputTokens: 350
-        }
-      })
+          maxOutputTokens: 350,
+        },
+      }),
     });
 
     const data = await response.json();
@@ -84,16 +107,18 @@ app.post('/api/chat', async (req, res) => {
     }
 
     res.json(data);
-
   } catch (error) {
     console.error(error);
+
     res.status(500).json({
-      error: "Internal Server Error"
+      error: 'Internal Server Error',
     });
   }
 });
 
-app.listen(5000, () => {
-  console.log("Gateway active on port 5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Gateway active on port ${PORT}`);
   console.log(`Business API proxied to ${FASTAPI_URL}`);
 });
