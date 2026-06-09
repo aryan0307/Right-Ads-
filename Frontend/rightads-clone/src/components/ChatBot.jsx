@@ -182,7 +182,7 @@ STRICT RULES:
       )}
 
       {isOpen && (
-        <div className="chatbot-container floating-glass floating-glass--static">
+        <div className="chatbot-container>
 
           <div className="chatbot-header">
             <div className="header-info">
