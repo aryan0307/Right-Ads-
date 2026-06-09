@@ -8,7 +8,18 @@ from sqlalchemy.orm import Session
 from app.database.connection import Base, SessionLocal, engine
 from app.database.migrations import run_migrations
 from app.models import Admin
-from app.routes import admin, auth, careers, certificates, contact, internships, leads, meeting_access, websocket, chat
+from app.routes import (
+    admin,
+    auth,
+    careers,
+    certificates,
+    contact,
+    internships,
+    leads,
+    meeting_access,
+    websocket,
+    chat,
+)
 from app.services.auth import hash_password
 
 load_dotenv()
@@ -22,15 +33,11 @@ app = FastAPI(
     version="2.0.0",
 )
 
-_cors_origins = os.getenv(
-    "CORS_ORIGINS",
-    "https://right-ads-ten.vercel.app,http://localhost:5173,http://localhost:3000",
-).split(",")
-
+# TEMP DEBUG CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o.strip() for o in _cors_origins if o.strip()],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -53,7 +60,10 @@ def seed_default_admin():
         if db.query(Admin).count() == 0:
             username = os.getenv("ADMIN_USERNAME", "admin")
             password = os.getenv("ADMIN_PASSWORD", "admin123")
-            admin_user = Admin(username=username, password_hash=hash_password(password))
+            admin_user = Admin(
+                username=username,
+                password_hash=hash_password(password),
+            )
             db.add(admin_user)
             db.commit()
             print(f"Default admin created: {username}")
