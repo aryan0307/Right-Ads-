@@ -1,5 +1,5 @@
-export const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
-export const WS_BASE = import.meta.env.VITE_WS_BASE || 'ws://localhost:9000';
+export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+export const WS_BASE = import.meta.env.VITE_WS_URL || 'ws://localhost:9000';
 
 export async function apiRequest(path, { method = 'GET', body, token, isFormData = false } = {}) {
   const headers = {};

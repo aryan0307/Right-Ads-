@@ -19,7 +19,7 @@ from app.services.status_service import count_requests_by_status, update_record_
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
-APP_URL = os.getenv("APP_URL", "http://localhost:5173")
+APP_URL = os.getenv("APP_URL", "https://right-ads-ten.vercel.app")
 
 
 @router.get("/analytics", response_model=AnalyticsResponse)

@@ -4,7 +4,7 @@ import os
 logger = logging.getLogger(__name__)
 
 FROM_EMAIL = os.getenv("FROM_EMAIL", "noreply@rightadsdigital.com")
-APP_URL = os.getenv("APP_URL", "http://localhost:5173")
+APP_URL = os.getenv("APP_URL", "https://right-ads-ten.vercel.app")
 
 
 def send_meeting_created(*, client_email: str, client_name: str, room_id: str, meeting_date: str | None) -> None:

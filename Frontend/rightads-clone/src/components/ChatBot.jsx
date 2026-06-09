@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './ChatBot.css';
 import { MessageSquare, X, Send, User, Bot } from 'lucide-react';
 import botData from '../assets/bot_info.json';
+import { API_BASE } from '../config/api';
 
 const ChatBot = ({ darkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -123,7 +124,7 @@ STRICT RULES:
         }))
       ];
 
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch(`${API_BASE}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

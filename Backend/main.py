@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.database.connection import Base, SessionLocal, engine
 from app.database.migrations import run_migrations
 from app.models import Admin
-from app.routes import admin, auth, careers, certificates, contact, internships, leads, meeting_access, websocket
+from app.routes import admin, auth, careers, certificates, contact, internships, leads, meeting_access, websocket, chat
 from app.services.auth import hash_password
 
 load_dotenv()
@@ -24,7 +24,7 @@ app = FastAPI(
 
 _cors_origins = os.getenv(
     "CORS_ORIGINS",
-    "http://localhost:5173,http://localhost:5000",
+    "https://right-ads-ten.vercel.app,http://localhost:5173,http://localhost:3000",
 ).split(",")
 
 app.add_middleware(
@@ -44,6 +44,7 @@ app.include_router(internships.router)
 app.include_router(certificates.router)
 app.include_router(admin.router)
 app.include_router(websocket.router)
+app.include_router(chat.router)
 
 
 def seed_default_admin():
