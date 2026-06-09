@@ -1,0 +1,134 @@
+/* ─── Floating Glass System ─────────────────────────────────────────────── */
+
+@property --float-y {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --float-x {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --hover-lift {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --hover-scale {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+/* Theme-aware glass tokens (inherit antigravity vars from Global.css) */
+.dark-theme {
+  --glass-bg: var(--antigravity-bg);
+  --glass-border: var(--antigravity-border);
+  --glass-shadow: var(--antigravity-shadow);
+  --glass-shadow-hover: var(--antigravity-shadow-hover);
+}
+
+.light-theme {
+  --glass-bg: var(--antigravity-bg);
+  --glass-border: var(--antigravity-border);
+  --glass-shadow: var(--antigravity-shadow);
+  --glass-shadow-hover: var(--antigravity-shadow-hover);
+}
+
+/* Accent-surface variant (stats section, colored backgrounds) */
+.floating-glass--accent {
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  --glass-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.light-theme .floating-glass--accent {
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Core floating container ───────────────────────────────────────────── */
+
+.floating-glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, --hover-lift 0.4s ease, --hover-scale 0.4s ease;
+  transform: translateX(calc(var(--scroll-drift, 0px) + var(--float-x, 0px)))
+    translateY(calc(var(--float-y, 0px) + var(--hover-lift, 0px)))
+    scale(var(--hover-scale, 1));
+  will-change: transform;
+}
+
+/* ─── Continuous vertical float (dynamic depth) ─────────────────────────── */
+
+@keyframes floatMotion {
+  0%, 100% { --float-y: -6px; }
+  50%       { --float-y:  6px; }
+}
+
+.float-lg {
+  animation: floatMotion 8s ease-in-out infinite;
+}
+
+.float-md {
+  animation: floatMotion 6s ease-in-out infinite;
+}
+
+.float-sm {
+  animation: floatMotion 4s ease-in-out infinite;
+}
+
+/* Stagger siblings for organic depth */
+.float-md:nth-child(2n) { animation-delay: -2s; }
+.float-md:nth-child(3n) { animation-delay: -4s; }
+.float-sm:nth-child(2n) { animation-delay: -1s; }
+.float-sm:nth-child(3n) { animation-delay: -2.5s; }
+.float-lg:nth-child(2n) { animation-delay: -3s; }
+
+/* ─── Hover lift physics ────────────────────────────────────────────────── */
+
+.floating-glass:hover {
+  animation-play-state: paused;
+  --hover-lift: -10px;
+  --hover-scale: 1.02;
+  box-shadow: var(--glass-shadow-hover);
+  border-color: var(--accent-blue);
+}
+
+/* Preserve directional hover for cert cards */
+.cert-card.floating-glass:hover {
+  --hover-lift: -6px;
+}
+
+/* Fixed UI elements: glass styling without float or scroll drift */
+.floating-glass--static {
+  animation: none;
+  transform: none;
+}
+
+.floating-glass--static:hover {
+  transform: translateY(-6px) scale(1.01);
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-glass {
+    animation: none;
+    --float-y: 0px;
+    --float-x: 0px;
+  }
+
+  .floating-glass:hover {
+    --hover-lift: -4px;
+    --hover-scale: 1.01;
+  }
+}

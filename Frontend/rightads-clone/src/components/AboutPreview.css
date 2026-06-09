@@ -1,0 +1,63 @@
+.about-preview {
+  background-color: var(--surface-dark);
+}
+
+.dark-theme .about-preview {
+  background-color: rgba(15, 23, 42, 0.5);
+}
+
+.light-theme .about-preview {
+  background-color: #ffffff;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.about-description {
+  max-width: 800px;
+  margin: 0 auto 60px;
+  text-align: center;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.about-info-card {
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.icon-box {
+  margin-bottom: 24px;
+}
+
+.icon-blue {
+  color: var(--accent-blue);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.card-text {
+  font-size: 1rem;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+}

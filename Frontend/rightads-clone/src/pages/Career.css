@@ -1,0 +1,248 @@
+.career-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 1px solid var(--border-dark);
+  background: var(--surface-dark);
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.light-theme .tab-btn {
+  background: white;
+  border-color: var(--border-light);
+}
+
+.tab-btn.active {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.listing-card {
+  padding: 40px;
+  border-radius: 24px;
+  position: relative;
+}
+
+.cat-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--accent-blue);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.listing-meta {
+  display: flex;
+  gap: 20px;
+  margin: 15px 0;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.listing-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.apply-btn {
+  margin-top: 25px;
+  background: none;
+  border: 2px solid var(--accent-blue);
+  color: var(--accent-blue);
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.apply-btn:hover {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 25px 30px;
+  background: var(--accent-blue);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.application-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.modal-body-scroll {
+  padding: 30px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-footer-sticky {
+  padding: 16px 30px 24px;
+  flex-shrink: 0;
+  border-top: 1px solid var(--antigravity-border);
+  background: inherit;
+  position: sticky;
+  bottom: 0;
+}
+
+.modal-footer-sticky .submit-btn {
+  width: 100%;
+  margin-top: 0;
+}
+
+.career-form-error {
+  color: #ef4444;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.form-group input, .form-group textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-dark);
+  background: rgba(148, 163, 184, 0.05);
+  color: inherit;
+  font-family: inherit;
+}
+
+.light-theme .form-group input, .light-theme .form-group textarea {
+  border-color: var(--border-light);
+}
+
+.submit-btn {
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.success-message-career {
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.success-message-career h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.success-message-career p {
+  opacity: 0.8;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.form-group input[type="file"] {
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .listings-grid {
+    grid-template-columns: 1fr;
+  }
+}

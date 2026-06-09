@@ -1,0 +1,57 @@
+.cert-preview {
+  background-color: var(--bg-dark);
+}
+
+.light-theme .cert-preview {
+  background-color: #f1f5f9;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 50px;
+}
+
+.cert-card {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.cert-icon {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--accent-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.cert-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.cert-desc {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+}
